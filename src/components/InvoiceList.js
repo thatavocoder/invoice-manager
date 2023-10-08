@@ -1,9 +1,9 @@
 import React from "react";
 import { add, remove } from "../store/invoice/invoiceSlice";
 import { connect } from "react-redux";
-import { Button, Card, Table } from "react-bootstrap";
+import { Button, Card, Container, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { BiCopy, BiEdit, BiTrash } from "react-icons/bi";
+import { BiEdit, BiTrash } from "react-icons/bi";
 import { BsEyeFill } from "react-icons/bs";
 import InvoiceModal from "./InvoiceModal";
 
@@ -30,7 +30,7 @@ class InvoiceList extends React.Component {
 
   render() {
     return (
-      <div className="d-flex flex-column gap-4 min-vh-100 p-4">
+      <Container className="d-flex flex-column gap-4 min-vh-100 p-4">
         <div className="d-flex justify-content-between align-items-center">
           <h3>Invoice Generator</h3>
           <Link to="/invoice-form" className="d-flex" style={{ width: '15%' }}>
@@ -91,7 +91,7 @@ class InvoiceList extends React.Component {
             showSaveButton={false}
           />
         }
-      </div>
+      </Container>
     );
   }
 }
