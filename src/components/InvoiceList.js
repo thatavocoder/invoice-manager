@@ -1,9 +1,9 @@
 import React from "react";
-import { add } from "../store/invoice/invoiceSlice";
+import { add, remove } from "../store/invoice/invoiceSlice";
 import { connect } from "react-redux";
 import { Button, Card, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { BiEdit, BiTrash } from "react-icons/bi";
+import { BiCopy, BiEdit, BiTrash } from "react-icons/bi";
 import { BsEyeFill } from "react-icons/bs";
 import InvoiceModal from "./InvoiceModal";
 
@@ -24,8 +24,11 @@ class InvoiceList extends React.Component {
     this.setState({ isOpen: true, selectedInvoice: invoice });
   };
 
+  removeInvoice = (invoiceNumber) => {
+    this.props.removeInvoice(invoiceNumber);
+  };
+
   render() {
-    console.log(this.props.invoices);
     return (
       <div className="d-flex flex-column gap-4 min-vh-100 p-4">
         <div className="d-flex justify-content-between align-items-center">
@@ -53,7 +56,7 @@ class InvoiceList extends React.Component {
                   <td>{invoice.invoiceNumber}</td>
                   <td>{invoice.billTo}</td>
                   <td>{invoice.dateOfIssue}</td>
-                  <td>{invoice.total}</td>
+                  <td>{invoice.currency}{invoice.total}</td>
                   <td className="d-flex gap-3 align-items-center">
                     <Link onClick={() => this.openModal(invoice)}>
                       <BsEyeFill size={16} />
@@ -61,7 +64,10 @@ class InvoiceList extends React.Component {
                     <Link to={`/invoice-form/${invoice.invoiceNumber}`}>
                       <BiEdit size={16} />
                     </Link>
-                    <Link>
+                    {/* <Link>
+                      <BiCopy size={16} />
+                    </Link> */}
+                    <Link onClick={() => this.removeInvoice(invoice.invoiceNumber)}>
                       <BiTrash size={16} color="red" />
                     </Link>
                   </td>
@@ -96,6 +102,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   addInvoice: (invoice) => dispatch(add(invoice)),
+  removeInvoice: (invoiceNumber) => dispatch(remove(invoiceNumber)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(InvoiceList);

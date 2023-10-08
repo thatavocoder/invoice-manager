@@ -8,6 +8,7 @@ import Modal from 'react-bootstrap/Modal';
 import { BiPaperPlane, BiCloudDownload } from "react-icons/bi";
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf'
+import withRouter from './WithRouter';
 
 function GenerateInvoice() {
   html2canvas(document.querySelector("#invoiceCapture")).then((canvas) => {
@@ -148,7 +149,7 @@ class InvoiceModal extends React.Component {
                 this.props.showSaveButton &&
                 <Col md={4}>
                   <Button variant="primary" className="d-block w-100 mt-3 mt-md-0" onClick={this.props.onSaveInvoice}>
-                    Save
+                    {this.props.params.id ? 'Update' : 'Save'}
                   </Button>
                 </Col>
               }
@@ -161,4 +162,4 @@ class InvoiceModal extends React.Component {
   }
 }
 
-export default InvoiceModal;
+export default withRouter(InvoiceModal);

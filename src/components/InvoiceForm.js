@@ -9,7 +9,7 @@ import InvoiceItem from './InvoiceItem';
 import InvoiceModal from './InvoiceModal';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { connect } from 'react-redux';
-import { add } from '../store/invoice/invoiceSlice';
+import { add, edit } from '../store/invoice/invoiceSlice';
 import { Container } from 'react-bootstrap';
 import withRouter from './WithRouter';
 import { Link } from 'react-router-dom';
@@ -52,6 +52,10 @@ class InvoiceForm extends React.Component {
 
   componentDidMount(prevProps) {
     this.handleCalculateTotal()
+    if (this.props.params.id !== undefined) {
+      const invoice = this.props.invoices.filter(invoice => parseInt(invoice.invoiceNumber) === parseInt(this.props.params.id))[0]
+      this.setState({ ...invoice, isOpen: false })
+    }
   }
 
   handleRowDel(items) {
@@ -142,12 +146,11 @@ class InvoiceForm extends React.Component {
     if (this.props.invoices.filter(invoice => invoice.invoiceNumber === this.state.invoiceNumber).length > 0 && this.props.params.id === undefined) {
       alert("Invoice already exists");
     } else if (this.props.params.id !== undefined) {
-      // edit invoice
-      console.log(this.props.invoices);
+      this.props.editInvoice(this.state)
+      this.props.navigate('/')
     } else {
       this.props.addInvoice(this.state)
       this.props.navigate('/')
-      console.log(this.props.invoices);
     }
   }
 
@@ -182,7 +185,9 @@ class InvoiceForm extends React.Component {
                       <span className="fw-bold me-2">Invoice&nbsp;Number:&nbsp;</span>
                       <Form.Control type="number" value={this.state.invoiceNumber} name={"invoiceNumber"} onChange={(event) => this.editField(event)} min="1" style={{
                         maxWidth: '70px'
-                      }} required="required" />
+                      }} required="required"
+                        disabled={this.props.params.id !== undefined}
+                      />
                     </div>
                   </div>
                   <hr className="my-4" />
@@ -254,6 +259,7 @@ class InvoiceForm extends React.Component {
                     discountAmmount={this.state.discountAmmount}
                     total={this.state.total}
                     onSaveInvoice={this.saveInvoice}
+                    showSaveButton={true}
                   />
                   <Form.Group className="mb-3">
                     <Form.Label className="fw-bold">Currency:</Form.Label>
@@ -302,6 +308,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   addInvoice: (invoice) => dispatch(add(invoice)),
+  editInvoice: (invoice) => dispatch(edit(invoice)),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(InvoiceForm));
