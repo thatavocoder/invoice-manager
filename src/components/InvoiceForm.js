@@ -12,6 +12,8 @@ import { connect } from 'react-redux';
 import { add } from '../store/invoice/invoiceSlice';
 import { Container } from 'react-bootstrap';
 import withRouter from './WithRouter';
+import { Link } from 'react-router-dom';
+import { BiArrowToLeft, BiLeftArrow, BiLeftArrowAlt } from 'react-icons/bi';
 
 class InvoiceForm extends React.Component {
   constructor(props) {
@@ -129,24 +131,24 @@ class InvoiceForm extends React.Component {
   };
 
   openModal = (event) => {
-    this.props.addInvoice(this.state)
+    event.preventDefault();
     this.handleCalculateTotal()
     this.setState({ isOpen: true })
   };
 
   closeModal = (event) => this.setState({ isOpen: false });
 
-  // saveInvoice = (event) => {
-  //   if (this.props.invoices.includes(this.state.invoiceNumber) && this.props.params.id === undefined) {
-  //     alert("Invoice number already exists");
-  //   } else if (this.props.params.id !== undefined) {
-  //     // edit invoice
-  //     console.log(this.props.invoices);
-  //   } else {
-  //     this.props.addInvoice(this.state)
-  //     console.log(this.props.invoices);
-  //   }
-  // }
+  saveInvoice = (event) => {
+    if (this.props.invoices.filter(invoice => invoice.invoiceNumber === this.state.invoiceNumber).length > 0 && this.props.params.id === undefined) {
+      alert("Invoice already exists");
+    } else if (this.props.params.id !== undefined) {
+      // edit invoice
+      console.log(this.props.invoices);
+    } else {
+      this.props.addInvoice(this.state)
+      console.log(this.props.invoices);
+    }
+  }
 
   render() {
     return (
@@ -155,8 +157,12 @@ class InvoiceForm extends React.Component {
           <Form onSubmit={this.openModal}>
             <Row>
               <Col md={8} lg={9}>
-                <Card className="p-4 p-xl-5 my-3 my-xl-4">
-                  <div className="d-flex flex-row align-items-start justify-content-between mb-3">
+                <Card className="p-4 p-xl-5 pt-xl-4 my-3 my-xl-4">
+                  <Link to={'/'} className='d-flex flex-row gap-2 text-decoration-none align-items-center'>
+                    <BiLeftArrowAlt size={24} />
+                    <p className='mb-0'>Back</p>
+                  </Link>
+                  <div className="mt-4 d-flex flex-row align-items-start justify-content-between mb-3">
                     <div className="d-flex flex-column">
                       <div className="d-flex flex-column">
                         <div className="mb-2">
@@ -236,7 +242,18 @@ class InvoiceForm extends React.Component {
               <Col md={4} lg={3}>
                 <div className="sticky-top pt-md-3 pt-xl-4">
                   <Button variant="primary" type='submit' className="d-block w-100">Review Invoice</Button>
-                  <InvoiceModal showModal={this.state.isOpen} closeModal={this.closeModal} info={this.state} items={this.state.items} currency={this.state.currency} subTotal={this.state.subTotal} taxAmmount={this.state.taxAmmount} discountAmmount={this.state.discountAmmount} total={this.state.total} />
+                  <InvoiceModal
+                    showModal={this.state.isOpen}
+                    closeModal={this.closeModal}
+                    info={this.state}
+                    items={this.state.items}
+                    currency={this.state.currency}
+                    subTotal={this.state.subTotal}
+                    taxAmmount={this.state.taxAmmount}
+                    discountAmmount={this.state.discountAmmount}
+                    total={this.state.total}
+                    onSaveInvoice={this.saveInvoice}
+                  />
                   <Form.Group className="mb-3">
                     <Form.Label className="fw-bold">Currency:</Form.Label>
                     <Form.Select onChange={event => this.onCurrencyChange({ currency: event.target.value })} className="btn btn-light my-1" aria-label="Change Currency">
