@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import Container from 'react-bootstrap/Container';
 import InvoiceForm from './components/InvoiceForm';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import InvoiceList from './components/InvoiceList';
@@ -16,7 +15,7 @@ class App extends Component {
         element: <InvoiceList />
       },
       {
-        path: "/create-invoice/:id?",
+        path: "/invoice-form/:id?",
         element: <InvoiceForm />
       },
     ]);

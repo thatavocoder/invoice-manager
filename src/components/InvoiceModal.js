@@ -133,22 +133,25 @@ class InvoiceModal extends React.Component {
           </div>
           <div className="pb-4 px-4">
             <Row>
-              <Col md={4}>
+              <Col md={this.props.showSaveButton ? 4 : 6}>
                 <Button variant="primary" className="d-block w-100" onClick={GenerateInvoice}>
                   <BiPaperPlane style={{ width: '15px', height: '15px', marginTop: '-3px' }} className="me-2" />Send Invoice
                 </Button>
               </Col>
-              <Col md={4}>
+              <Col md={this.props.showSaveButton ? 4 : 6}>
                 <Button variant="primary" className="d-block w-100 mt-3 mt-md-0" onClick={GenerateInvoice}>
                   <BiCloudDownload style={{ width: '16px', height: '16px', marginTop: '-3px' }} className="me-2" />
                   Download Copy
                 </Button>
               </Col>
-              <Col md={4}>
-                <Button variant="primary" className="d-block w-100 mt-3 mt-md-0" onClick={this.props.onSaveInvoice}>
-                  Save
-                </Button>
-              </Col>
+              {
+                this.props.showSaveButton &&
+                <Col md={4}>
+                  <Button variant="primary" className="d-block w-100 mt-3 mt-md-0" onClick={this.props.onSaveInvoice}>
+                    Save
+                  </Button>
+                </Col>
+              }
             </Row>
           </div>
         </Modal>

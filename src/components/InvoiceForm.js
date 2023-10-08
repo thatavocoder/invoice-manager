@@ -13,7 +13,7 @@ import { add } from '../store/invoice/invoiceSlice';
 import { Container } from 'react-bootstrap';
 import withRouter from './WithRouter';
 import { Link } from 'react-router-dom';
-import { BiArrowToLeft, BiLeftArrow, BiLeftArrowAlt } from 'react-icons/bi';
+import { BiLeftArrowAlt } from 'react-icons/bi';
 
 class InvoiceForm extends React.Component {
   constructor(props) {
@@ -146,6 +146,7 @@ class InvoiceForm extends React.Component {
       console.log(this.props.invoices);
     } else {
       this.props.addInvoice(this.state)
+      this.props.navigate('/')
       console.log(this.props.invoices);
     }
   }
