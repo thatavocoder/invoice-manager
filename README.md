@@ -6,12 +6,6 @@ An Invoice creator project built with React. Add itemized items, configure quant
 ### Live Demo
 https://invoicegeneratorswipe.netlify.app/
 
-### Screenshots
-<img src="https://i.imgur.com/38Msqap.png" style="max-width: 100px; width: 100%; height: auto;">
-<img src="https://i.imgur.com/FJvQMrh.png" style="max-width: 100px; width: 100%; height: auto;">
-<img src="https://i.imgur.com/ptLm4oy.png" style="max-width: 100px; width: 100%; height: auto;">
-<img src="https://i.imgur.com/dJxRSwh.png" style="max-width: 100px; width: 100%; height: auto;">
-
 ### Installation
 
 ```
@@ -28,6 +22,12 @@ npm start
 - Edit, delete and view invoices
 - Duplicate invoices
 - Download invoices as PDFs
+
+### Screenshots
+<img src="https://i.imgur.com/38Msqap.png" style="max-width: 100px; width: 100%; height: auto;">
+<img src="https://i.imgur.com/FJvQMrh.png" style="max-width: 100px; width: 100%; height: auto;">
+<img src="https://i.imgur.com/ptLm4oy.png" style="max-width: 100px; width: 100%; height: auto;">
+<img src="https://i.imgur.com/dJxRSwh.png" style="max-width: 100px; width: 100%; height: auto;">
 
 ### Meta
 
