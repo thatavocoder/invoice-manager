@@ -47,7 +47,7 @@ class InvoiceList extends React.Component {
             <thead>
               <tr>
                 <th className="border-top-0">Invoice Number</th>
-                <th className="border-top-0" style={{ maxWidth: '300px', display: 'flex', flexWrap: 'wrap' }}>Customer Name</th>
+                <th className="border-top-0">Customer Name</th>
                 <th className="border-top-0" style={{ minWidth: '100px' }}>Due Date</th>
                 <th className="border-top-0">Amount</th>
                 <th className="border-top-0">Actions</th>
