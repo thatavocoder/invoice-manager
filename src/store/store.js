@@ -1,3 +1,5 @@
+// redux store
+
 import { configureStore } from "@reduxjs/toolkit"
 import invoiceReducer from "./invoice/invoiceSlice"
 

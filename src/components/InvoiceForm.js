@@ -51,11 +51,22 @@ class InvoiceForm extends React.Component {
   }
 
   componentDidMount(prevProps) {
-    this.handleCalculateTotal()
+    // if we are editing an invoice (i.e. the id is in the url) then we need 
+    // to populate the form with the invoice data, else if we are duplicating 
+    // a new invoice from an existing invoice then we need to populate the form 
+    // with the invoice data from the previous page (i.e. the invoice list page)
+    // else we need to populate the form with a new invoice number
     if (this.props.params.id !== undefined) {
       const invoice = this.props.invoices.filter(invoice => parseInt(invoice.invoiceNumber) === parseInt(this.props.params.id))[0]
       this.setState({ ...invoice, isOpen: false })
+    } else if (this.props.location.state) {
+      const invoiceNumber = this.props.invoices.length + 1
+      this.setState({ ...this.props.location.state, invoiceNumber, isOpen: false })
+    } else {
+      const invoiceNumber = this.props.invoices.length + 1
+      this.setState({ invoiceNumber, isOpen: false })
     }
+    this.handleCalculateTotal()
   }
 
   handleRowDel(items) {
@@ -81,8 +92,8 @@ class InvoiceForm extends React.Component {
     var items = this.state.items;
     var subTotal = 0;
 
-    items.forEach(function (items) {
-      subTotal = parseFloat(subTotal + (parseFloat(items.price).toFixed(2) * parseInt(items.quantity))).toFixed(2)
+    items.forEach(function (item) {
+      subTotal = parseFloat(parseFloat(subTotal) + (parseFloat(item.price).toFixed(2) * parseInt(item.quantity))).toFixed(2)
     });
 
     this.setState({
@@ -100,7 +111,6 @@ class InvoiceForm extends React.Component {
         });
       });
     });
-
   };
 
   onItemizedItemEdit(evt) {
@@ -143,7 +153,10 @@ class InvoiceForm extends React.Component {
   closeModal = (event) => this.setState({ isOpen: false });
 
   saveInvoice = (event) => {
-    if (this.props.invoices.filter(invoice => invoice.invoiceNumber === this.state.invoiceNumber).length > 0 && this.props.params.id === undefined) {
+    // if the invoice number already exists and we are not editing an 
+    // existing show an alert, else if we are editing an existing invoice 
+    // then edit the invoice, else add a new invoice
+    if (this.props.invoices.filter(invoice => invoice.invoiceNumber.toString() === this.state.invoiceNumber.toString()).length > 0 && this.props.params.id === undefined) {
       alert("Invoice already exists");
     } else if (this.props.params.id !== undefined) {
       this.props.editInvoice(this.state)
@@ -162,6 +175,7 @@ class InvoiceForm extends React.Component {
             <Row>
               <Col md={8} lg={9}>
                 <Card className="p-4 p-xl-5 pt-xl-4 my-3 my-xl-4">
+                  {/* Go back to home */}
                   <Link to={'/'} className='d-flex flex-row gap-2 text-decoration-none align-items-center'>
                     <BiLeftArrowAlt size={24} />
                     <p className='mb-0'>Back</p>
@@ -259,6 +273,7 @@ class InvoiceForm extends React.Component {
                     discountAmmount={this.state.discountAmmount}
                     total={this.state.total}
                     onSaveInvoice={this.saveInvoice}
+                    // if opening the modal from the invoice form page then show the save button
                     showSaveButton={true}
                   />
                   <Form.Group className="mb-3">

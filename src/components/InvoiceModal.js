@@ -145,10 +145,12 @@ class InvoiceModal extends React.Component {
                   Download Copy
                 </Button>
               </Col>
+              {/* if showSaveButton is true, then show the save button */}
               {
                 this.props.showSaveButton &&
                 <Col md={4}>
                   <Button variant="primary" className="d-block w-100 mt-3 mt-md-0" onClick={this.props.onSaveInvoice}>
+                    {/* if editing an invoice, show 'Update' button, else show 'Save' button */}
                     {this.props.params.id ? 'Update' : 'Save'}
                   </Button>
                 </Col>

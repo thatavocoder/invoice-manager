@@ -9,6 +9,7 @@ import { store } from './store/store';
 
 class App extends Component {
   render() {
+    // routes
     const router = createBrowserRouter([
       {
         path: "/",
@@ -21,6 +22,7 @@ class App extends Component {
     ]);
 
     return (
+      // router and redux store providers
       <Provider store={store}>
         <RouterProvider router={router} />
       </Provider>

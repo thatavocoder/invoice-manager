@@ -1,3 +1,5 @@
+// using redux toolkit to create a slice of state for invoices and actions to add, remove, and edit invoices 
+
 import { createSlice } from "@reduxjs/toolkit"
 
 export const initialState = {
