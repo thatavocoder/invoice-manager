@@ -36,19 +36,19 @@ class InvoiceList extends React.Component {
         <div className="d-flex justify-content-between align-items-center">
           <h3>Invoice Generator</h3>
           {/* create invoice button */}
-          <Link to="/invoice-form" className="d-flex" style={{ width: '15%' }}>
+          <Link to="/invoice-form" className="d-flex" style={{ minWidth: '15%' }}>
             <Button variant="primary" className="flex-grow-1">
               Create Invoice
             </Button>
           </Link>
         </div>
-        <Card className="d-flex flex-column flex-grow-1 p-4">
+        <Card className="d-flex flex-column flex-grow-1 p-4 overflow-scroll">
           <Table>
             <thead>
               <tr>
                 <th className="border-top-0">Invoice Number</th>
-                <th className="border-top-0">Customer Name</th>
-                <th className="border-top-0">Due Date</th>
+                <th className="border-top-0" style={{ maxWidth: '300px', display: 'flex', flexWrap: 'wrap' }}>Customer Name</th>
+                <th className="border-top-0" style={{ minWidth: '100px' }}>Due Date</th>
                 <th className="border-top-0">Amount</th>
                 <th className="border-top-0">Actions</th>
               </tr>
@@ -61,19 +61,21 @@ class InvoiceList extends React.Component {
                   <td>{invoice.dateOfIssue}</td>
                   <td>{invoice.currency}{invoice.total}</td>
                   {/* view, edit, duplicate and delete action buttons */}
-                  <td className="d-flex gap-3 align-items-center">
-                    <a href="/#" onClick={() => this.openModal(invoice)}>
-                      <BsEyeFill size={16} />
-                    </a>
-                    <Link to={`/invoice-form/${invoice.invoiceNumber}`}>
-                      <BiEdit size={16} />
-                    </Link>
-                    <Link to={'/invoice-form'} state={invoice}>
-                      <BiCopy size={16} />
-                    </Link>
-                    <a href='/#' onClick={() => this.removeInvoice(invoice.invoiceNumber)}>
-                      <BiTrash size={16} color="red" />
-                    </a>
+                  <td>
+                    <div className="d-flex gap-3 align-items-center">
+                      <a href="/#" onClick={() => this.openModal(invoice)}>
+                        <BsEyeFill size={16} />
+                      </a>
+                      <Link to={`/invoice-form/${invoice.invoiceNumber}`}>
+                        <BiEdit size={16} />
+                      </Link>
+                      <Link to={'/invoice-form'} state={invoice}>
+                        <BiCopy size={16} />
+                      </Link>
+                      <a href='/#' onClick={() => this.removeInvoice(invoice.invoiceNumber)}>
+                        <BiTrash size={16} color="red" />
+                      </a>
+                    </div>
                   </td>
                 </tr>
               ))}
